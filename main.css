@@ -1,30 +1,27 @@
 
-.tile {
-  width: 100%;
-  height: 200px;
+.pump {
+  width: 480px;
+  height: 640px;
+  /*https://www.flickr.com/photos/30845644@N04/12013595335*/
+  background-image: url("img/diesel_zapfsaeule.jpg");
+  background-repeat: no-repeat;
 }
 
-.green {
-  background-color: #00ff00;
-}
-
-.red {
-  background-color: #ff0000;
-}
-
-.digit-container {
+.flex-container {
   display: flex;
   justify-content: center;
   align-items: center;
 }
 
+.digit-container {
+  width: 300px;
+}
+
 .digit, .comma {
   background-color: white;
   border: 1px solid black;
-  padding: 15px;
+  padding: 5px;
 
   font-family: Courier New, Courier, monospace;
-  text-align: center;
-  vertical-align: middle;
-  font-size: 5em;
+  font-size: 3em;
 }
