@@ -40,8 +40,28 @@ function longKeyPress(key, onContactStop, onContactStart) {
 
 }
 
+var digitalCounter = function(selector) {
+  var counterElement = $(selector);
+  var digits = counterElement.find('.digit');
+
+  function increase() {
+    var currentNumber = parseInt(_.map(digits, function(digitElement) {
+      return $(digitElement).text();
+    }).join(''));
+    var increased = _.padStart((currentNumber + 10) + '', digits.length, '0');
+    _.each(digits, function(digitElement, i) {
+      $(digitElement).text(increased[i]);
+    });
+  }
+
+  return {
+    increase: increase
+  };
+}
+
 function tile(selector) {
   var element = $(selector);
+  var tileCounter = digitalCounter(selector);
 
   function makeGreen() {
     element.removeClass('red');
@@ -53,22 +73,13 @@ function tile(selector) {
     element.addClass('red');
   }
 
-  function initialiseCounter() {
-    if(isNaN(parseInt(element.text()))) {
-      element.text('0');
-    }
-  }
-
   function increaseCounter() {
-    var currentNumber = element.text();
-    var increase = parseInt(currentNumber) + 1;
-    element.text(increase);
+    tileCounter.increase();
   }
 
   return {
     makeGreen: makeGreen,
     makeRed: makeRed,
-    initialiseCounter: initialiseCounter,
     increaseCounter: increaseCounter
   };
 
@@ -76,7 +87,6 @@ function tile(selector) {
 
 var spaceBarTile = tile('#on-space-bar');
 spaceBarTile.makeGreen();
-spaceBarTile.initialiseCounter();
 longKeyPress('space', spaceBarTile.makeGreen, function() {
   spaceBarTile.makeRed();
   spaceBarTile.increaseCounter();
