@@ -4,29 +4,6 @@
 // You can substitute option for alt and command for meta.
 // Other special keys are backspace, tab, enter, return, capslock, esc, escape, space, pageup, pagedown, end, home, left, up, right, down, ins, del, and plus.
 
-var spaceBarLastPressed = undefined;
-var spaceBarWatcher = undefined;
-
-function watchSpaceBar() {
-  if(spaceBarLastPressed !== undefined) {
-    var timeSinceLastPress = Date.now() - spaceBarLastPressed;
-    if(timeSinceLastPress >= 500) {
-      stopToWatchSpaceBar();
-      makeTileGreen();
-    } else {
-      makeTileRed();
-    }
-  }
-}
-
-function stopToWatchSpaceBar() {
-  if(spaceBarWatcher !== undefined) {
-    console.log('STOPPED TO PRESS SPACE BAR');
-    clearInterval(spaceBarWatcher);
-    spaceBarWatcher = undefined;
-  }
-}
-
 function makeTileGreen() {
   var spaceBarTile = $('#on-space-bar');
   spaceBarTile.removeClass('red');
@@ -39,11 +16,40 @@ function makeTileRed() {
   spaceBarTile.addClass('red');
 }
 
-Mousetrap.bind('space', function() { 
-  console.log('HIT SPACE');
-  spaceBarLastPressed = Date.now();
-  if(spaceBarWatcher === undefined) {
-    console.log('STARTING TO PRESS SPACE BAR');
-    spaceBarWatcher = setInterval(watchSpaceBar, 100);
+function longKeyPress(key, onContactStop, onContactStart) {
+
+  var lastContactAt = undefined;
+  var contactWatcher = undefined;
+
+  function checkForContact() {
+    if(lastContactAt !== undefined) {
+      var timeSinceLastContact = Date.now() - lastContactAt;
+      if(timeSinceLastContact >= 500) {
+        stopContact();
+        onContactStop();
+      } else {
+        onContactStart();
+      }
+    }
   }
-});
+
+  function stopContact() {
+    if(contactWatcher !== undefined) {
+      console.log('STOPPED CONTACT');
+      clearInterval(contactWatcher);
+      contactWatcher = undefined;
+    }
+  }
+
+  Mousetrap.bind(key, function() { 
+    console.log('HIT KEY', key);
+    lastContactAt = Date.now();
+    if(contactWatcher === undefined) {
+      console.log('STARTED CONTACT');
+      contactWatcher = setInterval(checkForContact, 100);
+    }
+  });
+
+}
+
+longKeyPress('space', makeTileGreen, makeTileRed);
