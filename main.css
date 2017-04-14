@@ -1,5 +1,5 @@
 
-.pump {
+#pump {
   width: 480px;
   height: 640px;
   /*https://www.flickr.com/photos/30845644@N04/12013595335*/
@@ -24,4 +24,14 @@
 
   font-family: Courier New, Courier, monospace;
   font-size: 3em;
+}
+
+.white {
+  background-color: white;
+  color: black;
+}
+
+.red {
+  background-color: rgb(123, 22, 22);
+  color: white;
 }

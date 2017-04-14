@@ -12,7 +12,7 @@ function longKeyPress(key, onContactStop, onContactStart) {
   function checkForContact() {
     if(lastContactAt !== undefined) {
       var timeSinceLastContact = Date.now() - lastContactAt;
-      if(timeSinceLastContact >= 500) {
+      if(timeSinceLastContact >= 100) {
         stopContact();
         onContactStop();
       } else {
@@ -44,7 +44,18 @@ var digitalCounter = function(selector) {
   var counterElement = $(selector);
   var digits = counterElement.find('.digit');
 
+  function activate() {
+    digits.removeClass('white');
+    digits.addClass('red');
+  }
+
+  function stop() {
+    digits.removeClass('red');
+    digits.addClass('white');
+  }
+
   function increase() {
+    activate();
     var currentNumber = parseInt(_.map(digits, function(digitElement) {
       return $(digitElement).text();
     }).join(''));
@@ -55,39 +66,11 @@ var digitalCounter = function(selector) {
   }
 
   return {
-    increase: increase
+    increase: increase,
+    stop: stop
   };
 }
 
-function tile(selector) {
-  var element = $(selector);
-  var tileCounter = digitalCounter(selector);
+var tileCounter = digitalCounter('#pump');
 
-  function makeGreen() {
-    element.removeClass('red');
-    element.addClass('green');
-  }
-
-  function makeRed() {
-    element.removeClass('green');
-    element.addClass('red');
-  }
-
-  function increaseCounter() {
-    tileCounter.increase();
-  }
-
-  return {
-    makeGreen: makeGreen,
-    makeRed: makeRed,
-    increaseCounter: increaseCounter
-  };
-
-}
-
-var spaceBarTile = tile('#on-space-bar');
-spaceBarTile.makeGreen();
-longKeyPress('space', spaceBarTile.makeGreen, function() {
-  spaceBarTile.makeRed();
-  spaceBarTile.increaseCounter();
-});
+longKeyPress('space', tileCounter.stop, tileCounter.increase);
