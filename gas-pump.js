@@ -32,4 +32,12 @@ var digitalCounter = function(selector) {
 
 var tileCounter = digitalCounter('#pump');
 
-longKeyPress('space', tileCounter.stop, tileCounter.increase);
+longKeyPress('space', 
+  function onStart() {
+  },
+  tileCounter.increase, 
+  function() {
+    tileCounter.stop();
+    playSound('kaching');
+  }
+);
