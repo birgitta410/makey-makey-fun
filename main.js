@@ -4,18 +4,6 @@
 // You can substitute option for alt and command for meta.
 // Other special keys are backspace, tab, enter, return, capslock, esc, escape, space, pageup, pagedown, end, home, left, up, right, down, ins, del, and plus.
 
-function makeTileGreen() {
-  var spaceBarTile = $('#on-space-bar');
-  spaceBarTile.removeClass('red');
-  spaceBarTile.addClass('green');
-}
-
-function makeTileRed() {
-  var spaceBarTile = $('#on-space-bar');
-  spaceBarTile.removeClass('green');
-  spaceBarTile.addClass('red');
-}
-
 function longKeyPress(key, onContactStop, onContactStart) {
 
   var lastContactAt = undefined;
@@ -52,4 +40,44 @@ function longKeyPress(key, onContactStop, onContactStart) {
 
 }
 
-longKeyPress('space', makeTileGreen, makeTileRed);
+function tile(selector) {
+  var element = $(selector);
+
+  function makeGreen() {
+    element.removeClass('red');
+    element.addClass('green');
+  }
+
+  function makeRed() {
+    element.removeClass('green');
+    element.addClass('red');
+  }
+
+  function initialiseCounter() {
+    if(isNaN(parseInt(element.text()))) {
+      element.text('0');
+    }
+  }
+
+  function increaseCounter() {
+    var currentNumber = element.text();
+    var increase = parseInt(currentNumber) + 1;
+    element.text(increase);
+  }
+
+  return {
+    makeGreen: makeGreen,
+    makeRed: makeRed,
+    initialiseCounter: initialiseCounter,
+    increaseCounter: increaseCounter
+  };
+
+}
+
+var spaceBarTile = tile('#on-space-bar');
+spaceBarTile.makeGreen();
+spaceBarTile.initialiseCounter();
+longKeyPress('space', spaceBarTile.makeGreen, function() {
+  spaceBarTile.makeRed();
+  spaceBarTile.increaseCounter();
+});
