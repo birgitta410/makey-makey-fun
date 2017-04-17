@@ -5,14 +5,11 @@
     <link rel="stylesheet" href="main.css">
 </head>
 <body>
-<!-- e.g. use LEGO/duplo gas pump or airplane refuelling vehicle -->
+<!-- count whenever there is contact (e.g.: have one person hold ground, the other a key, then touch hands) -->
 <div class="container">
-    <div id="pump" class="flex-container">
+    <div id="counter" class="flex-container">
         <div class="digit-container flex-container">
             <span class="digit">0</span>
-            <span class="digit">0</span>
-            <span class="digit">0</span>
-            <span class="comma">,</span>
             <span class="digit">0</span>
             <span class="digit">0</span>
         </div>
@@ -25,6 +22,19 @@
 <script src="main.js"></script>
 <script src="counter.js"></script>
 <script src="play-sounds.js"></script>
-<script src="gas-pump.js"></script>
+<script type="text/javascript">
+  var tileCounter = digitalCounter('#counter', 1);
+
+  longKeyPress('space', 
+    function onStart() {
+      tileCounter.increase();
+    },
+    function() {}, 
+    function() {
+      tileCounter.stop();
+      // playSound('scanner');
+    }
+  );
+</script>
 </body>
 </html>

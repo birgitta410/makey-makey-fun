@@ -17,6 +17,11 @@ body {
   background-repeat: no-repeat;
 }
 
+#counter {
+  width: 480px;
+  height: 640px;
+}
+
 .flex-container {
   display: flex;
   justify-content: center;
