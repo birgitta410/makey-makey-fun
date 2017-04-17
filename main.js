@@ -1,8 +1,8 @@
 
 // deals with a key being pressed for a longer time, or lots of times quickly in a row
 // (which is what basically happens when you put two things together for longer in makey makey setup)
-function longKeyPress(key, onContactStart, duringContact, onContactStop) {
-
+function longKeyPress(key, onContactStart, duringContact, onContactStop, reactionDelay) {
+  reactionDelay = reactionDelay || 500;
   var lastContactAt = undefined;
   var contactWatcher = undefined;
   var inContact = false;

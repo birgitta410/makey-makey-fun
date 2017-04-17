@@ -28,12 +28,12 @@
   longKeyPress('space', 
     function onStart() {
       tileCounter.increase();
+      playSound('scanner');
     },
     function() {}, 
     function() {
       tileCounter.stop();
-      playSound('scanner');
-    }
+    }, 200
   );
 </script>
 </body>
