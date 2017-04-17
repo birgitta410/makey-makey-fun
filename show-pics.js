@@ -10,7 +10,7 @@ var imageTags = _.map($('.tile'), function(tileElement) {
 longKeyPress('up',
   function onStart() { playSound('scanner'); },
   function duringContact() {
-    imageTags[0].attr('src', 'img/suitcase_01.png');
+    imageTags[0].attr('src', 'img/skorpion.jpg');
     imageTags[0].attr('height', '300px');
   },
   function stop() {
@@ -20,7 +20,7 @@ longKeyPress('up',
 longKeyPress('down', 
   function onStart() { playSound('scanner'); },
   function duringContact() {
-    imageTags[1].attr('src', 'img/suitcase_01.png');
+    imageTags[1].attr('src', 'img/flugzeug.jpg');
     imageTags[1].attr('height', '300px');
   },
   function stop() {
@@ -28,19 +28,19 @@ longKeyPress('down',
   });
 
 longKeyPress('right',
-  function onStart() { playSound('scanner'); },
+  function onStart() { playSound('kaching'); },
   function duringContact() {
-    imageTags[2].attr('src', 'img/suitcase_01.png');
+    imageTags[2].attr('src', 'img/skorpion2.jpeg');
     imageTags[2].attr('height', '300px');
   }, function stop() {
     imageTags[2].attr('src', defaultPic);
   }
 );
 
-longKeyPress('left',
+longKeyPress('space',
   function onStart() { playSound('scanner'); },
   function duringContact() {
-    imageTags[3].attr('src', 'img/suitcase_01.png');
+    imageTags[3].attr('src', 'img/diesel_zapfsaeule.jpg');
     imageTags[3].attr('height', '300px');
   }, function stop() {
     imageTags[3].attr('src', defaultPic);
