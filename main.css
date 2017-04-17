@@ -49,6 +49,10 @@ body {
   font-size: 3em;
 }
 
+.digit.large {
+  font-size: 10em;
+}
+
 .white {
   background-color: white;
   color: black;
